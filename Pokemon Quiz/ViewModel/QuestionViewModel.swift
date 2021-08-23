@@ -1,8 +1,19 @@
-//
-//  QuestionViewModel.swift
-//  Pokemon Quiz
-//
-//  Created by Madeleine Waldenborg on 2021-08-22.
-//
-
 import Foundation
+
+class QuestionViewModel: NSObject {
+    
+    var observable = Observable<[Question]>()
+    private var questionManager: QuestionManager!
+    private var dataStore: PokemonDataStore!
+    
+    override init() {
+        super.init()
+        self.questionManager = QuestionManager()
+        self.dataStore = PokemonDataStore()
+        load()
+    }
+    
+    private func load() {
+        dataStore.load()
+    }
+}

@@ -1,8 +1,7 @@
-//
-//  Utils.swift
-//  Pokemon Quiz
-//
-//  Created by Madeleine Waldenborg on 2021-08-22.
-//
-
 import Foundation
+
+func classFromString(_ className: String) -> AnyClass! {
+    let namespace = (Bundle.main.infoDictionary!["CFBundleExecutable"] as! String).replacingOccurrences(of: " ", with: "_")
+    let cls: AnyClass = NSClassFromString("\(namespace).\(className)")!
+    return cls
+}
