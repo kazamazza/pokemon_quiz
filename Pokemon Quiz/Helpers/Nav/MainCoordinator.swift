@@ -14,4 +14,11 @@ class MainCoordinator: Coordinator {
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: false)
     }
+    
+    func startGame() {
+        let vc = GameViewController()
+        vc.coordinator = self
+        navigationController.isNavigationBarHidden = true
+        navigationController.pushViewController(vc, animated: false)
+    }
 }

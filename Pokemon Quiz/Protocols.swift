@@ -4,7 +4,6 @@ import UIKit
 protocol Coordinator {
     var childCoordinators: [Coordinator] { get set }
     var navigationController: UINavigationController { get set }
-
     func start()
 }
 
@@ -33,5 +32,17 @@ protocol APIClient {
 }
 
 protocol ViewFactoring {
-    static func generateView(viewController: UIViewController) throws -> UIView?
+    static func generateView(viewController: BaseViewController) throws -> NativeView?
+}
+
+protocol ViewModel: NSObject {
+    func load()
+}
+
+protocol BrandLabelling {
+    func customize()
+}
+
+@objc protocol StackViewSelectable {
+    func didSelectStackViewItem(sender: Any)
 }

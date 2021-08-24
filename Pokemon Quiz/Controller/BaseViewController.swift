@@ -3,19 +3,20 @@ import UIKit
 class BaseViewController: UIViewController {
     
     weak var coordinator: MainCoordinator?
-    var viewTemplate: UIView!
+    var nativeView: NativeView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         do {
-            viewTemplate = try ViewFactory.generateView(viewController: self)
+            nativeView = try ViewFactory.generateView(viewController: self)
         }
         catch {
             fatalError()
         }
-        guard viewTemplate != nil else {
+        guard nativeView != nil else {
             fatalError()
         }
-        self.view.addSubview(viewTemplate)
+        self.view.addSubview(nativeView)
     }
+
 }
