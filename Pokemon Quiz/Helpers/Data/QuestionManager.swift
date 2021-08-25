@@ -2,7 +2,7 @@ import Foundation
 
 class QuestionManager: NSObject {
     
-    let questionCount = 10
+    let questionCount = 1
     var characters: [Character]?
     var questionQueue = [Question]()
     private var index = 0

@@ -3,11 +3,12 @@ import UIKit
 
 class OptionButton: UIButton {
     
-    var delegate: StackViewSelectable? {
+    var canSelect = true
+    var delegate: ViewSelectable? {
         didSet {
             guard let delegate = delegate else {return}
             let tap = UITapGestureRecognizer(target: delegate,
-                                             action: #selector(delegate.didSelectStackViewItem))
+                                             action: #selector(delegate.didSelectViewItem))
             addGestureRecognizer(tap)
         }
     }
@@ -32,5 +33,14 @@ class OptionButton: UIButton {
     
     func highlight(color: UIColor) {
         backgroundColor = color
+    }
+    
+    func disable() {
+        alpha = 0.1
+        guard let text = titleLabel?.text else {
+            return
+        }
+        titleLabel?.attributedText = text.strikethrough()
+        canSelect = false
     }
 }

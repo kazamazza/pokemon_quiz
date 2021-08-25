@@ -1,27 +1,41 @@
 import Foundation
 import UIKit
 
-extension GameViewController: StackViewSelectable {
-    func didSelectStackViewItem(sender: Any) {
+extension GameViewController: ViewSelectable {
+    
+    func didSelectViewItem(sender: Any) {
+        let tap = sender as! UITapGestureRecognizer
         guard session.active else {
+            if let button = tap.view as? MenuButton{
+                handleMenuButton(button: button)
+            }
             return
         }
-        let tap = sender as! UITapGestureRecognizer
+        
         if let button = tap.view as? OptionButton {
             guard let tapped = button.titleLabel?.text else{return}
             handleInput(answer: tapped)
         }
+        if let button = tap.view as? SupportButton {
+            if button.canSelect {
+                handleSupportItem(selection: button)
+            }
+        }
+    }
+    
+    func handleMenuButton(button: MenuButton) {
+        switch button.mode {
+        case .Restart:
+            restart()
+    }
     }
         
-    func handleInput(answer:String?) {
+   func handleInput(answer:String?) {
         if let timer = session.timer {
             timer.invalidate()
         }
         session.freeze()
         guard let name = currentQuestion.correct.name?.uppercased() else {return}
-        guard let answer = answer else {
-            return
-        }
         let nativeView = self.nativeView as? GameViewControllerView
         if let optionsView = nativeView?.optionsView {
             optionsView.arrangedSubviews.forEach { view in
@@ -39,6 +53,19 @@ extension GameViewController: StackViewSelectable {
         }
     }
     
+    func handleSupportItem(selection: SupportButton) {
+        guard let mode = selection.mode else {
+            return
+        }
+        switch mode {
+        case .fiftyFifty:
+            session.reduce()
+        case .timeBoost:
+            session.timeBoost()
+        }
+        selection.disable()
+    }
+    
     func correct() {
             do {try AudioHelper.shared.playTrack(name: "correct")}
             catch{}
@@ -49,4 +76,5 @@ extension GameViewController: StackViewSelectable {
         do {try AudioHelper.shared.playTrack(name: "incorrect")}
         catch{}
     }
+
 }

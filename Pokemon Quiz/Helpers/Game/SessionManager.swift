@@ -43,6 +43,24 @@ class SessionManager: NSObject {
         }
     }
     
+    func reduce() {
+        let correct = delegate.currentQuestion.correct.name
+        var incorrect = delegate.currentQuestion.options.filter { $0.name != correct}
+        incorrect.shuffle()
+        incorrect.removeLast()
+        delegate.updateViewWithReduceAction(options: incorrect)
+    }
+    
+    func timeBoost() {
+        guard let value = counter.value else{return}
+        counter.value = value + 15
+        delegate.updateViewWithTimeBoostAction()
+    }
+    
+    func getScore()-> Int {
+        score
+    }
+    
     func gameOver() {
         active = false
         timer?.invalidate()

@@ -1,6 +1,6 @@
 import UIKit
 
-class GameViewController: BaseViewController {
+class GameViewController: BaseViewController, Restarting {
 
     private var questionViewModel: QuestionViewModel!
     var currentQuestion: Question!
@@ -16,10 +16,7 @@ class GameViewController: BaseViewController {
     
     func nextQuestion() {
         currentQuestion = questionViewModel.nextQuestion()
-        guard currentQuestion != nil else{
-            gameOver()
-        return}
-        print(currentQuestion.correct.name)
+        guard currentQuestion != nil else{gameOver();return}
         loadQuestion()
     }
     
@@ -36,10 +33,25 @@ class GameViewController: BaseViewController {
         }
     }
     
+    func updateViewWithReduceAction(options: [Character]) {
+        let nativeView = self.nativeView as? GameViewControllerView
+        nativeView?.updateOptionsWithReduceAction(remove: options)
+    }
+    
+    
+    func updateViewWithTimeBoostAction() {
+        let nativeView = self.nativeView as? GameViewControllerView
+        nativeView?.updateTimeBoostSupportWithTimeBoostAction()
+    }
+    
     func gameOver() {
         session.gameOver()
         let nativeView = self.nativeView as? GameViewControllerView
-        nativeView?.shadow.isHidden = false 
+        nativeView?.gameOver(score: session.getScore())
+    }
+    
+    func restart() {
+        print("restart.....")
     }
     
     func bindToObservable(observable: Observable<[Bool]>){

@@ -3,9 +3,10 @@ import UIKit
 class GameViewControllerView: NativeView {
     
     var timerView: TimerView!
-    var optionsView: UIStackView!
-    var supportsView: UIStackView!
+    var optionsView: OptionsStackView!
+    var supportsView: SupportsStackView!
     var characterView: CharacterView!
+    var summaryView: SummaryView!
     var background: UIImageView!
     var shadow: UIView!
     
@@ -19,6 +20,9 @@ class GameViewControllerView: NativeView {
         configureShadowConstraints()
         configureCharacterView()
         configureTimerView()
+        configureOptionsView()
+        configureSupportsView()
+        configureSummaryView()
     }
     
     private func configureTimerView() {
@@ -63,13 +67,7 @@ class GameViewControllerView: NativeView {
     }
     
     private func configureOptionsView(){
-        optionsView = UIStackView()
-        optionsView.axis = .vertical
-        optionsView.distribution = .fillEqually
-        optionsView.spacing = 20
-        optionsView.isLayoutMarginsRelativeArrangement = true
-        optionsView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 5, bottom: 16, trailing: 5)
-        optionsView.addBackground(color: .brandNavyBlue)
+        optionsView = OptionsStackView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height * 0.5))
         addSubview(optionsView)
         setOptionsViewConstraints()
     }
@@ -85,33 +83,44 @@ class GameViewControllerView: NativeView {
     }
     
     func loadOptions(question: Question) {
-        configureOptionsView()
+        let count = optionsView.arrangedSubviews.count
+        if count > 0 {
+            let _ = optionsView.arrangedSubviews.map {
+                $0.removeFromSuperview()
+            }
+        }
         for option in question.options {
             let button = OptionButton()
             button.setTitle(option.name, for: .normal)
-            button.delegate = (self.viewContoller as! StackViewSelectable)
+            button.delegate = (self.viewContoller as! ViewSelectable)
             optionsView.addArrangedSubview(button)
         }
-        configureSupports()
-        setNeedsLayout()
+        optionsView.setNeedsLayout()
     }
     
-    private func configureSupports() {
-        supportsView = UIStackView()
-        supportsView.axis = .horizontal
-        supportsView.distribution = .fillEqually
-        supportsView.spacing = 20
-        supportsView.isLayoutMarginsRelativeArrangement = true
-        supportsView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 5, bottom: 16, trailing: 5)
-        supportsView.addBackground(color: .brandNavyBlue)
+    func updateOptionsWithReduceAction(remove: [Character]) {
+        if let reducer = supportsView.arrangedSubviews.first as? SupportButton {
+            reducer.disable()
+        }
+        for item in remove {
+            disableIncorrectOption(option: item)
+        }
+    }
+    
+    func updateTimeBoostSupportWithTimeBoostAction() {
+        if let timeboost = supportsView.arrangedSubviews[1] as? SupportButton {
+            timeboost.disable()
+        }
+    }
+    
+    func disableIncorrectOption(option: Character) {
+        optionsView.disableIncorrect(option: option)
+    }
+    
+    private func configureSupportsView() {
+        supportsView = SupportsStackView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height * 0.5))
+        supportsView.delegate = (self.viewContoller as! ViewSelectable)
         addSubview(supportsView)
-        let reducer = SupportButton()
-        reducer.setTitle("50/50", for: .normal)
-        reducer.delegate = (self.viewContoller as! StackViewSelectable)
-        let timeBoost = SupportButton()
-        timeBoost.setTitle("+ 10 secs", for: .normal)
-        timeBoost.delegate = (self.viewContoller as! StackViewSelectable)
-        supportsView.addArrangedSubviews(views: [reducer,timeBoost])
         setSupportsConstraints()
     }
     
@@ -122,5 +131,29 @@ class GameViewControllerView: NativeView {
                             supportsView.trailingAnchor.constraint(equalTo: trailingAnchor),
                             supportsView.bottomAnchor.constraint(equalTo: bottomAnchor)]
             NSLayoutConstraint.activate(constraints)
+    }
+    
+    private func configureSummaryView() {
+        summaryView = SummaryView(frame: CGRect(x: 0, y: 0, width: frame.width * 0.8, height: frame.height * 0.40))
+        summaryView.layer.zPosition = layer.zPosition + 20
+        summaryView.isHidden = true
+        summaryView.delegate = (self.viewContoller as? ViewSelectable)
+        addSubview(summaryView)
+        setSummaryViewConstraints()
+    }
+    
+    private func setSummaryViewConstraints() {
+        summaryView.translatesAutoresizingMaskIntoConstraints = false
+        let constraints  = [summaryView.centerXAnchor.constraint(equalTo:                        centerXAnchor),
+                            summaryView.widthAnchor.constraint(equalToConstant: summaryView.frame.width),
+                            summaryView.centerYAnchor.constraint(equalTo: centerYAnchor),
+                            summaryView.heightAnchor.constraint(equalToConstant: summaryView.frame.height)]
+        NSLayoutConstraint.activate(constraints)
+    }
+    
+    func gameOver(score: Int) {
+        shadow.isHidden = false
+        summaryView.isHidden = false
+        summaryView.msg.text = "You score was \(score)"
     }
 }

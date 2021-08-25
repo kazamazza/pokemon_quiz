@@ -43,6 +43,10 @@ protocol BrandLabelling {
     func customize()
 }
 
-@objc protocol StackViewSelectable {
-    func didSelectStackViewItem(sender: Any)
+@objc protocol ViewSelectable {
+    func didSelectViewItem(sender: Any)
+}
+
+protocol Restarting {
+    func restart()
 }

@@ -1,14 +1,20 @@
 import Foundation
 import UIKit
 
+enum SupportOption: String {
+    case fiftyFifty
+    case timeBoost
+}
+
 class SupportButton: UIButton {
     
+    var mode: SupportOption!
     var canSelect = true
-    var delegate: StackViewSelectable? {
+    var delegate: ViewSelectable? {
         didSet {
             guard let delegate = delegate else {return}
             let tap = UITapGestureRecognizer(target: delegate,
-                                             action: #selector(delegate.didSelectStackViewItem))
+                                             action: #selector(delegate.didSelectViewItem))
             addGestureRecognizer(tap)
         }
     }
@@ -23,11 +29,16 @@ class SupportButton: UIButton {
         clipsToBounds = true
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func disable() {
+        alpha = 0.1
+        guard let text = titleLabel?.text else {
+            return
+        }
+        titleLabel?.attributedText = text.strikethrough()
+        canSelect = false
     }
     
-    func highlight(color: UIColor) {
-        backgroundColor = color
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

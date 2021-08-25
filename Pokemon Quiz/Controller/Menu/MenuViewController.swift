@@ -1,15 +1,15 @@
 import UIKit
 
-class MenuViewController: BaseViewController, StackViewSelectable {
+class MenuViewController: BaseViewController, ViewSelectable {
     
-    func didSelectStackViewItem(sender: Any) {
+    func didSelectViewItem(sender: Any) {
         coordinator?.startGame()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         do {
-            //try AudioHelper.shared.playTrack(name: "theme", loops: -1)
+            try AudioHelper.shared.playTrack(name: "theme", loops: -1)
         }
         catch{
             print("unable to play theme....")

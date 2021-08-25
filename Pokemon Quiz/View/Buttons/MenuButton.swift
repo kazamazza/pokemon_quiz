@@ -1,13 +1,20 @@
 import Foundation
 import UIKit
 
-class MenuButton: UIButton {
+enum MenuButtonActions: String {
+    case Restart
+}
 
-    var delegate: StackViewSelectable? {
+class MenuButton: UIButton {
+    
+    lazy var mode: MenuButtonActions = {
+        return mode
+    }()
+    var delegate: ViewSelectable? {
         didSet {
             guard let delegate = delegate else {return}
             let tap = UITapGestureRecognizer(target: delegate,
-                                             action: #selector(delegate.didSelectStackViewItem))
+                                             action: #selector(delegate.didSelectViewItem))
             addGestureRecognizer(tap)
         }
     }

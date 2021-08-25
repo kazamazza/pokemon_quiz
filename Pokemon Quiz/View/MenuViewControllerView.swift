@@ -2,7 +2,7 @@ import UIKit
 
 class MenuViewControllerView: NativeView {
     
-    var menu: UIStackView!
+    var menu: MenuStackView!
     var background: UIImageView!
     
     override func didMoveToWindow() {
@@ -17,18 +17,8 @@ class MenuViewControllerView: NativeView {
     }
     
     private func configureMenuButtons() {
-        menu = UIStackView()
-        menu.axis = .horizontal
-        menu.distribution = .fillEqually
-        menu.spacing = 20
-        menu.isLayoutMarginsRelativeArrangement = true
-        menu.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 5, bottom: 16, trailing: 5)
-        menu.addBackground(color: .brandNavyBlue)
-
-        let play = MenuButton()
-        play.setTitle("Play", for: .normal)
-        play.delegate = (self.viewContoller as! StackViewSelectable)
-        menu.addArrangedSubviews(views: [play])
+        menu = MenuStackView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height * 0.10))
+        menu.delegate = (self.viewContoller as! ViewSelectable)
         addSubview(menu)
         setMenuConstraints()
     }
