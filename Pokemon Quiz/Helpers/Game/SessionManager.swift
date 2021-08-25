@@ -4,17 +4,22 @@ class SessionManager: NSObject {
     
     private var score = 0
     var correctAnswers = [Question]()
-    var counter = 10
     var timer: Timer?
     var active = false
-    weak var delegate: GameViewController!
+    weak var delegate: GameViewController! {
+        didSet {
+            delegate.bindToCounter(observable: counter)
+        }
+    }
+    private var counter = Observable<Int>()
+
     
     func question() {
-        counter = 10
+        counter.value = 10
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) {[weak self] (timer) in
             guard let self = self else {return}
-            self.counter -= 1
-            if self.counter == 0{
+            self.counter.value! -= 1
+            if self.counter.value == 0{
                 self.delegate.handleInput(answer: nil)
                 timer.invalidate()
             }

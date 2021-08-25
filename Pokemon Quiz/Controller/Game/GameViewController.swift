@@ -6,7 +6,6 @@ class GameViewController: BaseViewController {
     var currentQuestion: Question!
     let session = SessionManager()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         session.delegate = self
@@ -20,6 +19,7 @@ class GameViewController: BaseViewController {
         guard currentQuestion != nil else{
             gameOver()
         return}
+        print(currentQuestion.correct.name)
         loadQuestion()
     }
     
@@ -46,6 +46,13 @@ class GameViewController: BaseViewController {
         observable.bind { [weak self] result in
             guard let self = self else {return}
                 self.nextQuestion()
+        }
+    }
+    
+    func bindToCounter(observable: Observable<Int>) {
+        _ = observable.bind {count in
+            let nativeView = self.nativeView as? GameViewControllerView
+            nativeView?.timerView.counter.text = String(count)
         }
     }
 }

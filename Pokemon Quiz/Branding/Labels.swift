@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class UILabelTitleThumbnail: UILabel {
+class UILabelCounter: UILabel {
     override var text: String? {
         didSet {
             customize()
@@ -9,18 +9,18 @@ class UILabelTitleThumbnail: UILabel {
     }
 }
 
-extension UILabelTitleThumbnail: BrandLabelling {
+extension UILabelCounter: BrandLabelling {
     func customize() {
         if self.text != nil {
             self.textAlignment = .center
-            self.font = UIFont(name: "HelveticaNeue", size: FontSizes.small.rawValue)
+            self.font = UIFont(name: "HelveticaNeue", size: FontSizes.large.rawValue)
             self.textColor = UIColor.brandWhite
             super.text = text?.uppercased()
         }
     }
 }
 
-class UILabelTitleChannel: UILabel {
+class UILabelOptionButton: UILabel {
     override var text: String? {
         didSet {
             customize()
@@ -28,7 +28,7 @@ class UILabelTitleChannel: UILabel {
     }
 }
 
-extension UILabelTitleChannel: BrandLabelling {
+extension UILabelOptionButton: BrandLabelling {
     func customize() {
         if self.text != nil {
             self.textAlignment = .center
@@ -40,7 +40,7 @@ extension UILabelTitleChannel: BrandLabelling {
 }
 
 
-class UILabelTitleCategory: UILabel {
+class UILabelMenuButton: UILabel {
     override var text: String? {
         didSet {
             customize()
@@ -48,12 +48,13 @@ class UILabelTitleCategory: UILabel {
     }
 }
 
-extension UILabelTitleCategory: BrandLabelling {
+extension UILabelMenuButton: BrandLabelling {
     func customize() {
         if self.text != nil {
             self.textAlignment = .center
             self.font = UIFont(name: "HelveticaNeue-Bold", size: FontSizes.small.rawValue)
-            self.textColor = UIColor.brandWhite
+            self.text = text?.uppercased()
+            self.textColor = UIColor.brandPurple
         }
     }
 }

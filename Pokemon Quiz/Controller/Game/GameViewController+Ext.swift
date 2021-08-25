@@ -18,7 +18,10 @@ extension GameViewController: StackViewSelectable {
             timer.invalidate()
         }
         session.freeze()
-        guard let name = currentQuestion.correct.name else {return}
+        guard let name = currentQuestion.correct.name?.uppercased() else {return}
+        guard let answer = answer else {
+            return
+        }
         let nativeView = self.nativeView as? GameViewControllerView
         if let optionsView = nativeView?.optionsView {
             optionsView.arrangedSubviews.forEach { view in
@@ -29,7 +32,7 @@ extension GameViewController: StackViewSelectable {
             }
         }
 
-        let action: () -> () = answer == currentQuestion.correct.name ? correct: incorrect
+        let action: () -> () = answer == name ? correct: incorrect
         action()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.nextQuestion()

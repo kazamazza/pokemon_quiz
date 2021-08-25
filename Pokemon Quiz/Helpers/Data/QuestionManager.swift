@@ -2,7 +2,7 @@ import Foundation
 
 class QuestionManager: NSObject {
     
-    let questionCount = 2
+    let questionCount = 10
     var characters: [Character]?
     var questionQueue = [Question]()
     private var index = 0
@@ -22,9 +22,7 @@ class QuestionManager: NSObject {
     
     private func generateQuestions() {
         guard let characters = characters else {return}
-        
         var pool = characters
-        print(pool.count)
         for _ in 0...questionCount - 1 {
             var options = [Character]()
             for _ in 0...3 {

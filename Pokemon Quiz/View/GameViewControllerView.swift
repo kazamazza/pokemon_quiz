@@ -2,7 +2,9 @@ import UIKit
 
 class GameViewControllerView: NativeView {
     
+    var timerView: TimerView!
     var optionsView: UIStackView!
+    var supportsView: UIStackView!
     var characterView: CharacterView!
     var background: UIImageView!
     var shadow: UIView!
@@ -16,6 +18,22 @@ class GameViewControllerView: NativeView {
         addSubview(shadow)
         configureShadowConstraints()
         configureCharacterView()
+        configureTimerView()
+    }
+    
+    private func configureTimerView() {
+        timerView = TimerView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height * 0.05))
+        addSubview(timerView)
+        setTimerViewConstraints()
+    }
+    
+    private func setTimerViewConstraints() {
+        timerView.translatesAutoresizingMaskIntoConstraints = false
+        let constraints  = [timerView.topAnchor.constraint(equalTo: characterView.bottomAnchor),
+                            timerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                            timerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                            timerView.heightAnchor.constraint(equalToConstant: timerView.frame.height)]
+        NSLayoutConstraint.activate(constraints)
     }
     
     private func configureShadowConstraints() {
@@ -58,7 +76,7 @@ class GameViewControllerView: NativeView {
     
     private func setOptionsViewConstraints() {
         optionsView.translatesAutoresizingMaskIntoConstraints = false
-        let constraints  = [optionsView.topAnchor.constraint(equalTo: characterView.bottomAnchor),
+        let constraints  = [optionsView.topAnchor.constraint(equalTo: timerView.bottomAnchor),
                             optionsView.leadingAnchor.constraint(equalTo: leadingAnchor),
                             optionsView.trailingAnchor.constraint(equalTo: trailingAnchor),
                             optionsView.heightAnchor.constraint(equalToConstant: frame.height * 0.5)]
@@ -74,6 +92,35 @@ class GameViewControllerView: NativeView {
             button.delegate = (self.viewContoller as! StackViewSelectable)
             optionsView.addArrangedSubview(button)
         }
+        configureSupports()
         setNeedsLayout()
+    }
+    
+    private func configureSupports() {
+        supportsView = UIStackView()
+        supportsView.axis = .horizontal
+        supportsView.distribution = .fillEqually
+        supportsView.spacing = 20
+        supportsView.isLayoutMarginsRelativeArrangement = true
+        supportsView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 5, bottom: 16, trailing: 5)
+        supportsView.addBackground(color: .brandNavyBlue)
+        addSubview(supportsView)
+        let reducer = SupportButton()
+        reducer.setTitle("50/50", for: .normal)
+        reducer.delegate = (self.viewContoller as! StackViewSelectable)
+        let timeBoost = SupportButton()
+        timeBoost.setTitle("+ 10 secs", for: .normal)
+        timeBoost.delegate = (self.viewContoller as! StackViewSelectable)
+        supportsView.addArrangedSubviews(views: [reducer,timeBoost])
+        setSupportsConstraints()
+    }
+    
+    private func setSupportsConstraints() {
+        supportsView.translatesAutoresizingMaskIntoConstraints = false
+        let constraints  = [supportsView.topAnchor.constraint(equalTo: optionsView.bottomAnchor),
+                            supportsView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                            supportsView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                            supportsView.bottomAnchor.constraint(equalTo: bottomAnchor)]
+            NSLayoutConstraint.activate(constraints)
     }
 }

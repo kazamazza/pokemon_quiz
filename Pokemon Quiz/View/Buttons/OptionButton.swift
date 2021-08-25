@@ -11,12 +11,16 @@ class OptionButton: UIButton {
             addGestureRecognizer(tap)
         }
     }
+    
+    override func setTitle(_ title: String?, for state: UIControl.State) {
+        super.setTitle(title?.uppercased(), for: state)
+        titleLabel!.textAlignment = .center
+        titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: FontSizes.large.rawValue)
+        setTitleColor(.brandWhite, for: .normal)
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        titleLabel?.font = UIFont(name: "HelveticaNeue", size: FontSizes.large.rawValue)
-        titleLabel?.text = titleLabel?.text?.uppercased()
-        titleLabel?.textColor = UIColor.brandPink
         layer.borderWidth = 0.0
         layer.cornerRadius = 8
         clipsToBounds = true

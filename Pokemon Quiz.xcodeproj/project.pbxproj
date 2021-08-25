@@ -24,6 +24,8 @@
 		D46C350526D58BB9001E27D3 /* incorrect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D46C350426D58BB9001E27D3 /* incorrect.mp3 */; };
 		D46C350726D58DEC001E27D3 /* correct.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D46C350626D58DEB001E27D3 /* correct.mp3 */; };
 		D46C350926D59EA0001E27D3 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46C350826D59EA0001E27D3 /* SessionManager.swift */; };
+		D47B324126D60EB80064A38E /* SupportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47B324026D60EB80064A38E /* SupportButton.swift */; };
+		D47B324326D617BA0064A38E /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47B324226D617BA0064A38E /* TimerView.swift */; };
 		D47C071826D139A000079D08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C071726D139A000079D08 /* AppDelegate.swift */; };
 		D47C071A26D139A000079D08 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C071926D139A000079D08 /* SceneDelegate.swift */; };
 		D47C072226D139A000079D08 /* Pokemon_Quiz.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D47C072026D139A000079D08 /* Pokemon_Quiz.xcdatamodeld */; };
@@ -85,6 +87,8 @@
 		D46C350426D58BB9001E27D3 /* incorrect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incorrect.mp3; sourceTree = "<group>"; };
 		D46C350626D58DEB001E27D3 /* correct.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = correct.mp3; sourceTree = "<group>"; };
 		D46C350826D59EA0001E27D3 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		D47B324026D60EB80064A38E /* SupportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportButton.swift; sourceTree = "<group>"; };
+		D47B324226D617BA0064A38E /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		D47C071426D139A000079D08 /* Pokemon Quiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pokemon Quiz.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D47C071726D139A000079D08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D47C071926D139A000079D08 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -243,6 +247,7 @@
 			children = (
 				D46C34F626D52E71001E27D3 /* MenuButton.swift */,
 				D46C350026D57B34001E27D3 /* OptionButton.swift */,
+				D47B324026D60EB80064A38E /* SupportButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -399,6 +404,7 @@
 				D46C34D926D4F85A001E27D3 /* GameViewControllerView.swift */,
 				D4D95C4F26D256B900A1B2F0 /* MenuViewControllerView.swift */,
 				D46C34F826D5312E001E27D3 /* NativeView.swift */,
+				D47B324226D617BA0064A38E /* TimerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -561,6 +567,7 @@
 				D4D95C5B26D2780500A1B2F0 /* QuestionViewModel.swift in Sources */,
 				D46C350926D59EA0001E27D3 /* SessionManager.swift in Sources */,
 				D47C071826D139A000079D08 /* AppDelegate.swift in Sources */,
+				D47B324326D617BA0064A38E /* TimerView.swift in Sources */,
 				D4D95C5026D256B900A1B2F0 /* MenuViewControllerView.swift in Sources */,
 				D47C072226D139A000079D08 /* Pokemon_Quiz.xcdatamodeld in Sources */,
 				D46C34E226D4FB5C001E27D3 /* Styling.swift in Sources */,
@@ -577,6 +584,7 @@
 				D47C071A26D139A000079D08 /* SceneDelegate.swift in Sources */,
 				D4D95C5326D2589000A1B2F0 /* ViewFactory.swift in Sources */,
 				D4D95C5526D25E9000A1B2F0 /* Data&Models.swift in Sources */,
+				D47B324126D60EB80064A38E /* SupportButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
